@@ -4,7 +4,7 @@ class SalariesController < ApplicationController
   end
 
   def show
-    @salary = Salary.find(param[:id])
+    @salary = Salary.find(params[:id])
   end
 
   def new
@@ -12,7 +12,7 @@ class SalariesController < ApplicationController
   end
 
   def edit
-    @salary = Salary.find(param[:id])
+    @salary = Salary.find(params[:id])
     if @salary.save
       @salary
     else
@@ -31,5 +31,12 @@ class SalariesController < ApplicationController
   end
 
   def update
+    @salary = Salary.find(params[:id])
+    if @salary.update_attributes(params.require(:salary).permit(:amount))
+      redirect_to @salary
+    else
+      flash[:error] = "error in saving"
+    end
   end
+
 end
